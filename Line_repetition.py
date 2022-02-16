@@ -84,7 +84,7 @@ class Line:
 					if not func_l[i]:
 						func[i] = all_f()
 
-		self.parts_string = string.split('{}')
+		self.string = string
 		self.inserts = []
 		self.iter_list = iter_list
 		if (dif := len(set([len(iter_object) for iter_object in iter_list]))) != 1:
@@ -97,8 +97,10 @@ class Line:
 				# Проверка строк
 				try:
 					string = strings[index]
-					if string is None:
+					if string is None or string == '':
 						string = '{}'
+					elif string.count('{') == 0 and string.count('}') == 0:
+						string += '{}'
 				except (IndexError, KeyError):
 					string = '{}'
 				# Проверка функций
@@ -110,22 +112,15 @@ class Line:
 
 				self.inserts.append(Insert(string, iter_list[index], func.copy()))
 
-	def __str__(self):
-		pass
-
 	def Start(self):
 		'''
 		:return: Выводит в терминал отформатированные строки
 		'''
 
 		for i in range(len(self.iter_list[0])):
-			string = ''
 			val = [self.iter_list[v][i] for v in range(len(self.iter_list))]
-			for index in range(len(self.parts_string) - 1):
-				string += self.parts_string[index] + self.inserts[index].insert(i, val)
-			else:
-				string += self.parts_string[-1]
-			print(string)
+			rez = [insert.insert(i, val) for insert in self.inserts]
+			print(self.string.format(*rez))
 
 
 if __name__ == '__main__':
@@ -140,13 +135,22 @@ if __name__ == '__main__':
 
 
 	list1 = [2, 7, 5]
-	list4 = '-' * 2 + '3'
 	list2 = [2, 8, 5]
 	list3 = {1: 15, 0: 4, 2: 15}
-	# I = Insert('перед {} за', [], [lambda x: True, lambda x: True])
-	# print(f'|{I.first_string}', f'{I.last_string}|', sep='')
-	L = Line('Start: {}{}{}{} Rezult: {}', [list1, list4, list2, list3, ['верно', 'верно', 'верно']],
+	list4 = '-' * 2 + '3'
+
+	L = Line('Start: {}{}{}{} Rezult: {}', [list1, list4, list2, list3, ['верно', 'верно', True]],
 			 ['пример > {} + ', 'пример > {} * ', '{} = ', '{:2}', ' {}'],
-			 {0: [lambda x: x >= 0 and x <= 1], 1: [lambda x: x >= 2 and x < 3]})
-	print(*L.inserts, sep='')
+			 {0: [lambda x: x >= 0 and x <= 1], 1: [lambda x: x >= 2 and x < 3], 3: {1: f2, 0: f1}})
+	print(*L.inserts, sep='', end='\n------\n')
+	L.Start()
+	print('------')
+
+	l1 = [125, 77, 25, 333]
+	l2 = '+-*/'
+	l3 = [88, 99, 101, 555]
+	l4 = [l1[0] + l3[0], l1[1] - l3[1], l1[2] * l3[2], round(l1[3] / l3[3], 2)]
+	l5 = ["int"] * 4
+	l6 = ["float"] * 4
+	L = Line('Math > {}{}{}{} Type rez: {}{}', [l1, l2, l3, l4, l5, l6], ['{:3}', ' {} ', '{:3}', ' = {:4}'], {4: [None, lambda x: type(x[3]) == int], 5: [None, lambda x: type(x[3]) == float]})
 	L.Start()
