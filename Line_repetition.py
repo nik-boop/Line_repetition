@@ -23,7 +23,7 @@ class Insert:
 		:return: итерируемый объект, форматируемая строка, документацию функций
 		:rtype: str
 		'''
-		return f'Итерируемый объект{self.iterable}\n' \
+		return f'Итерируемый объект: {self.iterable}\n' \
 			   f'Строка: {self.string}\n' \
 			   f'Функции: {self.index_func.__doc__, self.value_func.__doc__}\n'
 
@@ -142,6 +142,7 @@ if __name__ == '__main__':
 	L = Line('Start: {}{}{}{} Rezult: {}', [list1, list4, list2, list3, ['верно', 'верно', True]],
 			 ['пример > {} + ', 'пример > {} * ', '{} = ', '{:2}', ' {}'],
 			 {0: [lambda x: x >= 0 and x <= 1], 1: [lambda x: x >= 2 and x < 3], 3: {1: f2, 0: f1}})
+
 	print(*L.inserts, sep='', end='\n------\n')
 	L.Start()
 	print('------')
@@ -149,7 +150,7 @@ if __name__ == '__main__':
 	l1 = [125, 77, 25, 333]
 	l2 = '+-*/'
 	l3 = [88, 99, 101, 555]
-	l4 = [l1[0] + l3[0], l1[1] - l3[1], l1[2] * l3[2], round(l1[3] / l3[3], 2)]
+	l4 = [l1[0] + l3[0], l1[1] - l3[1], l1[2] * l3[2], l1[3] / l3[3]]
 	l5 = ["int"] * 4
 	l6 = ["float"] * 4
 	L = Line('Math > {}{}{}{} Type rez: {}{}', [l1, l2, l3, l4, l5, l6], ['{:3}', ' {} ', '{:3}', ' = {:4}'], {4: [None, lambda x: type(x[3]) == int], 5: [None, lambda x: type(x[3]) == float]})
