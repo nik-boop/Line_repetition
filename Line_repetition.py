@@ -142,7 +142,7 @@ if __name__ == '__main__':
 	list1 = [2, 7, 5]
 	list4 = '-' * 2 + '3'
 	list2 = [2, 8, 5]
-	list3 = [4, 15, 15]
+	list3 = {1: 15, 0: 4, 2: 15}
 	# I = Insert('перед {} за', [], [lambda x: True, lambda x: True])
 	# print(f'|{I.first_string}', f'{I.last_string}|', sep='')
 	L = Line('Start: {}{}{}{} Rezult: {}', [list1, list4, list2, list3, ['верно', 'верно', 'верно']],
