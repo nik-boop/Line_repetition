@@ -106,7 +106,7 @@ class Line:
 				# Проверка функций
 				try:
 					func = functions[index]
-				except (IndexError, KeyError):
+				except (IndexError, KeyError, TypeError):
 					func = [None, None]
 				check_f(func)
 
@@ -153,5 +153,17 @@ if __name__ == '__main__':
 	l4 = [l1[0] + l3[0], l1[1] - l3[1], l1[2] * l3[2], l1[3] / l3[3]]
 	l5 = ["int"] * 4
 	l6 = ["float"] * 4
-	L = Line('Math > {}{}{}{} Type rez: {}{}', [l1, l2, l3, l4, l5, l6], ['{:3}', ' {} ', '{:3}', ' = {:4}'], {4: [None, lambda x: type(x[3]) == int], 5: [None, lambda x: type(x[3]) == float]})
+	L = Line('Math > {}{}{}{} Type rez: {}{}', [l1, l2, l3, l4, l5, l6], ['{:3}', ' {} ', '{:3}', ' = {:4}'],
+			 {4: [None, lambda x: type(x[3]) == int], 5: [None, lambda x: type(x[3]) == float]})
+	L.Start()
+
+	f1 = open('Names', mode='r', encoding='utf-8')
+	f2 = open('Last_names', mode='r', encoding='utf-8')
+	f3 = open('mails', mode='r', encoding='utf-8')
+
+	l1 = f1.read().split('\n')
+	l2 = f2.read().split('\n')
+	l3 = f3.read().split('\n')
+
+	L = Line('Names: {} {} || gmail > {}', [l1, l2, l3], {2: '{}@gmail.com'})
 	L.Start()
