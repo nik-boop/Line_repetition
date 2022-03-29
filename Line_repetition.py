@@ -156,6 +156,7 @@ if __name__ == '__main__':
 	L = Line('Math > {}{}{}{} Type rez: {}{}', [l1, l2, l3, l4, l5, l6], ['{:3}', ' {} ', '{:3}', ' = {:4}'],
 			 {4: [None, lambda x: type(x[3]) == int], 5: [None, lambda x: type(x[3]) == float]})
 	L.Start()
+	print('------')
 
 	f1 = open('Names', mode='r', encoding='utf-8')
 	f2 = open('Last_names', mode='r', encoding='utf-8')
